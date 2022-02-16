@@ -1,10 +1,10 @@
-# algorithmicsGarciaDiazVicenteUO42478
+# algorithmicsTrianaCarlosUO283428
 Repository for the Algorithmics course at the School of Computer Engineering of the University of Oviedo
 
 ## Information
-**Student**: Vicente García Díaz
+**Student**: Carlos Triana Fern�ndez
 
 **Year**: 2022
 
-**Repository URL**: https://github.com/vicegd/algorithmicsGarciaDiazVicenteUO42478
+**Repository URL**: https://github.com/CharlieTeefe/algorithmicsTrianaCarlosUO283428.git
 
