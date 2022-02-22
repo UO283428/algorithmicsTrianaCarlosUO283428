@@ -13,9 +13,11 @@ public static int[][] loadMatrixFromFile (String fileName) {
 	    int[][] Matrix;
 	    
 	    try {
-	    	   BufferedReader file = new BufferedReader(new FileReader(fileName));
+	    	   BufferedReader file = new BufferedReader(new FileReader("src/main/"+fileName));
 	    	   line = file.readLine();
 	    	   n = Integer.parseInt(line);
+	    	   System.out.println("The size of m is: " + n);
+	    	   System.out.println();
 	    	   Matrix = new int[n][n];
 	    	   int theRow = 0;
 	    	   while (file.ready()) {
@@ -24,6 +26,7 @@ public static int[][] loadMatrixFromFile (String fileName) {
 	    			for (int i = 0; i < row.length; i++) {
 	    				Matrix[theRow][i] = Integer.parseInt(row[i]);
 	    			}
+	    			theRow++;
 	    		}
 	    		file.close();
 	    		return Matrix;

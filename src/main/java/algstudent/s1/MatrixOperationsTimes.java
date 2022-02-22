@@ -1,12 +1,15 @@
-package algstudent.s0;
+package algstudent.s1;
 
 import java.util.Random;
 
-public class MatrixOperations {
+import algstudent.s0.FileUtil;
+import algstudent.s0.MatrixOperations;
+
+public class MatrixOperationsTimes {
 
 	int Matrix[][];
 	int n = 0;
-	MatrixOperations(int n, int min, int max){
+	MatrixOperationsTimes(int n, int min, int max){
 		this.n = n;
 		if ( n < 0)
 			throw new IllegalArgumentException("No negative values allowed for the size.");
@@ -22,9 +25,38 @@ public class MatrixOperations {
 		}
 	}
 	
-	MatrixOperations(String fname){
+	MatrixOperationsTimes(String fname){
 		Matrix = FileUtil.loadMatrixFromFile(fname);
 		this.n = Matrix[0].length;
+	}
+	
+	public static void main(String[] args) {
+		int n = Integer.parseInt(args[0]);
+		
+		long t1, t2, t3;
+		MatrixOperationsTimes op = new MatrixOperationsTimes(n, 0, 10);
+		
+		for(int i = n; i < Integer.MAX_VALUE; i += 3) {
+			op = new MatrixOperationsTimes(i, 0, 10);
+			t1 = System.currentTimeMillis();
+			int sum = op.sumDiagonal1();
+			t2 = System.currentTimeMillis();
+			t3 = t2 -t1;
+			System.out.printf("Size=%d TIME=%d milliseconds SUM=%d\n",
+					i, t3, sum);
+		}
+		
+		System.out.println("Diagonal2");
+		for(int i = n; i < Integer.MAX_VALUE; i += 3) {
+			op = new MatrixOperationsTimes(i, 0, 10);
+			t1 = System.currentTimeMillis();
+			int sum = op.sumDiagonal2();
+			t2 = System.currentTimeMillis();
+			t3 = t2 -t1;
+			System.out.printf("Size=%d TIME=%d milliseconds SUM=%d\n",
+					i, t3, sum);
+		}
+		
 	}
 	
 	public int getSize() {
