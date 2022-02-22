@@ -58,5 +58,33 @@ public class MatrixOperations {
 		}
 		return sum;
 	}
-
+	public void travelPath(int i, int j) {
+		System.out.println(i + ", " + j);
+		int num = Matrix[i][j];
+		Matrix[i][j] = -1;
+		switch(num) {
+		case 1:
+			if (j == 0)
+				break;
+			travelPath(i, j-1);
+			break;
+		case 2:
+			if (i == n-1)
+				break;
+			travelPath(i+1, j);
+			break;
+		case 3:
+			if (j == n-1)
+				break;
+			travelPath(i, j + 1);
+		case 4:
+			if (i == 0)
+				break;
+			travelPath(i-1, j);
+		case -1:
+			break;
+		default:
+			break;
+		}
+	}
 }
