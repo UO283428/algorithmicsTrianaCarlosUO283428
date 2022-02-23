@@ -2,13 +2,14 @@ package algstudent.s12;
 
 import java.util.Random;
 
-public class Loop2 {
+public class Loop5 {
 	public static long loop2(int n) {
 		Random rn = new Random();
 		int cont = 0;
 		for (int i=1; i<=n; i++)
 			for (int j=1; j<=n; j++) 
-				cont += rn.nextInt();
+				for (int k = 1; k <= n; k *= 2)
+					cont += rn.nextInt();
 		return cont;
 	}
 	
