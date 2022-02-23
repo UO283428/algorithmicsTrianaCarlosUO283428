@@ -23,7 +23,7 @@ public class Vector1 {
 	  int n = Integer.parseInt(arg[0]); //Size of the problem in the first argument
 	  v = new int[n];
 	  fillIn(v);
-	  write(v);	
+	  write(v);
 	  int s = sum(v);
 	  System.out.println("THE SUM OF ELEMENTS IS = "+ s);
 	  int[] m = new int[2];

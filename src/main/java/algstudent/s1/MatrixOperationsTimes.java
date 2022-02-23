@@ -35,19 +35,23 @@ public class MatrixOperationsTimes {
 		
 		long t1, t2, t3;
 		MatrixOperationsTimes op = new MatrixOperationsTimes(n, 0, 10);
-		
-		for(int i = n; i < Integer.MAX_VALUE; i += 3) {
-			op = new MatrixOperationsTimes(i, 0, 10);
-			t1 = System.currentTimeMillis();
-			int sum = op.sumDiagonal1();
-			t2 = System.currentTimeMillis();
-			t3 = t2 -t1;
-			System.out.printf("Size=%d TIME=%d milliseconds SUM=%d\n",
-					i, t3, sum);
+		try {
+			for(int i = n; i < Integer.MAX_VALUE; i *= 3) {
+				op = new MatrixOperationsTimes(i, 0, 10);
+				t1 = System.currentTimeMillis();
+				int sum = op.sumDiagonal1();
+				t2 = System.currentTimeMillis();
+				t3 = t2 -t1;
+				System.out.printf("Size=%d TIME=%d milliseconds SUM=%d\n",
+						i, t3, sum);
+			}
+		}catch(OutOfMemoryError e) {
+			System.out.println(e);
 		}
 		
+		
 		System.out.println("Diagonal2");
-		for(int i = n; i < Integer.MAX_VALUE; i += 3) {
+		for(int i = n; i < Integer.MAX_VALUE; i *= 3) {
 			op = new MatrixOperationsTimes(i, 0, 10);
 			t1 = System.currentTimeMillis();
 			int sum = op.sumDiagonal2();
