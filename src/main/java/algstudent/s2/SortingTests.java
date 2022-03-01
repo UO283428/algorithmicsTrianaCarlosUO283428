@@ -10,15 +10,15 @@ public class SortingTests {
 		
 		testSortingAlgorithm(new Insertion(n));
 		
-		testSortingAlgorithm(new Selection(n));
-		
-		testSortingAlgorithm(new Bubble(n));
-		
-		testSortingAlgorithm(new QuicksortFateful(n));
-		
-		testSortingAlgorithm(new QuicksortCentralElement(n));
-		
-		testSortingAlgorithm(new QuicksortMedianOfThree(n));
+//		testSortingAlgorithm(new Selection(n));
+//		
+//		testSortingAlgorithm(new Bubble(n));
+//		
+//		testSortingAlgorithm(new QuicksortFateful(n));
+//		
+//		testSortingAlgorithm(new QuicksortCentralElement(n));
+//		
+//		testSortingAlgorithm(new QuicksortMedianOfThree(n));
 	}
 	
 	public static void testSortingAlgorithm(Vector v) {

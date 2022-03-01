@@ -15,10 +15,11 @@ public class Insertion extends Vector {
 		
 		for (int i = 1; i < elements.length; i++) {
 			lower = elements[i];
-			int j = i-1;			for (; j >= 0; j--) {
-				if (lower < elements[j]) {
-					elements[j+1] = elements[j];
-				}
+			
+			int j = i-1;
+			while(j >= 0 && lower < elements[j]) {
+				elements[j+1] = elements[j];
+				j--;
 			}
 			elements[j+1] = lower;
 		}
