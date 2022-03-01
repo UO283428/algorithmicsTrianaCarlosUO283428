@@ -16,28 +16,40 @@ public class SortingMeasurements {
 		}
 		int n = it[0];
 		System.out.println("Different sizes = " + i);
+		
+		//Inverse
 		System.out.println(option);
 		measureTimes(new Insertion(n), it);
-		
-		measureTimes(new Selection(n), it);
-		
-		measureTimes(new Bubble(n), it);
-		
 		option = "inverse";
 		System.out.println(option);
 		measureTimes(new Insertion(n), it);
-		
-		measureTimes(new Selection(n), it);
-		
-		measureTimes(new Bubble(n), it);
-		
 		option = "rand";
 		System.out.println(option);
 		measureTimes(new Insertion(n), it);
 		
+		//Selection
+		option = "sorted";
+		System.out.println(option);
 		measureTimes(new Selection(n), it);
-		
+		option = "inverse";
+		System.out.println(option);
+		measureTimes(new Selection(n), it);
+		option = "rand";
+		System.out.println(option);
+		measureTimes(new Selection(n), it);
+
+		//Bubble
+		option = "sorted";
+		System.out.println(option);
 		measureTimes(new Bubble(n), it);
+		option = "inverse";
+		System.out.println(option);
+		measureTimes(new Bubble(n), it);
+		option = "rand";
+		System.out.println(option);
+		measureTimes(new Bubble(n), it);
+
+
 		
 		
 		
