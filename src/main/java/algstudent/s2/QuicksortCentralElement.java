@@ -10,21 +10,39 @@ public class QuicksortCentralElement extends Vector {
 	}
 	
 	private void quickSort(int left, int right) {
-		int pivotindx = (left + right)/2;
-		int pivot = elements[pivotindx];
-		
+		int pivotIndex;
+		int pivot;
 		int i = left;
-		int j = right;
-		while(i < j) {
-			while( elements[i] < pivot) {
-				i++;
-			}
-			
-			while(elements[j] > pivot) {
-				j--;
-			}
-			
-			interchange(i, j);
+		int j = right - 1;
+
+		if (left < right){
+			pivotIndex = (left + right)/2;
+			pivot = elements[pivotIndex];
+			elements[pivotIndex] = elements[right];
+			elements[right] = pivot;
+
+			if (0 < right - left)
+				while (elements[i] <= pivot && i < right)
+					i++;
+
+	    		while (elements[j] >= pivot && j > left)
+	    			j--;
+
+	    		if (i < j) 
+	    			interchange(i, j);
+	        
+	    		while (i < j) {
+	    			while (elements[i] <= pivot && i < right)
+	    				i++;
+	    			while (elements[j] >= pivot && j > left)
+	    				j--;
+	    			if (i < j) 
+	    				interchange(i, j);
+	        }				
+				elements[right] = elements[i];
+				elements[i] = pivot;
+				quickSort(left, i-1);
+				quickSort(i+1, right);		
 		}
 	}
 
@@ -37,4 +55,4 @@ public class QuicksortCentralElement extends Vector {
 	public String getName() {
 		return "Quicksort - Central element";
 	} 
-} 
+}
