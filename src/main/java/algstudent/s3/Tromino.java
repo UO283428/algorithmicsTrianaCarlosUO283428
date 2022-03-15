@@ -4,21 +4,21 @@ public class Tromino {
 
 	static int color = 1;
 	static int[][] matrix;
-	
+
 	public static void main(String[] args) {
-		int size = 8;
+		int size = 16;
 		matrix = new int[size][size];
 
-		int emptyx = 3;
-		int emptyy = 5;
-		
+		int emptyx = 13;
+		int emptyy = 9;
+
 		matrix[emptyy][emptyx] = -1;
 		printMatrix();
 		fillIn(0, 0, size, emptyx, emptyy);
 		printMatrix();
-		
+
 	}
-	
+
 	private static void printMatrix() {
 		int n = matrix.length;
 		for (int i=0; i<n; i++) {
@@ -27,18 +27,19 @@ public class Tromino {
 				}
 			System.out.println();
 			}
-		System.out.println("");
+		System.out.println();
 	}
 
 	public static void fillIn(int startx, int starty, int n, int emptyx, int emptyy) {
+		printMatrix();
 		int quadrant = 1;
 		int half = n/2;
 		
-		if ((emptyx-startx) >= half && emptyy >= half)
+		if ((emptyx-startx) >= half && (emptyy-startx) >= half)
 			quadrant = 4;
-		if (emptyx >= half && emptyy < half)
+		if ((emptyx-startx) >= half && (emptyy-starty) < half)
 			quadrant = 2;
-		if (emptyx < half && emptyy >= half)
+		if ((emptyx-startx) < half && (emptyy-starty) >= half)
 			quadrant = 3;
 		
 		if (n == 2) {
@@ -48,69 +49,64 @@ public class Tromino {
 						matrix[starty + i][startx + j] = color;
 					}
 				}
-				color++;
 			}
+			color++;
 		}else {
 		
 		switch(quadrant) {
 		case 1:
-			fillIn(startx, starty, half, emptyx, emptyy);
-			
-			matrix[half][half] = color;
-			fillIn(half, half, half, half, half);
-			
-			matrix[half][half-1] = color;
-			fillIn(startx, half, half, half-1, half);
-			
-			matrix[half-1][half] = color;
-			fillIn(half, starty, half, half, half -1);
-		
+
+			matrix[starty + (half-1)][startx + (half)] = color; // q2
+			matrix[starty + (half)][startx + (half-1)] = color;  // q3
+			matrix[starty + (half)][startx + (half)] = color;	// q4
 			color++;
+			
+			fillIn(startx, starty, half, emptyx, emptyy); // q
+			fillIn(startx + half, starty, half, startx + (half), starty + (half-1)); // q2
+			fillIn(startx, starty + half, half, startx + (half-1), starty + (half)); // q3
+			fillIn(startx + half, starty + half, half, startx + (half), starty + (half)); // q4
+			
 			break;
 			
 		case 2:
-			fillIn(half, starty, half, emptyx, emptyy);
-			
-			matrix[half-1][half-1] = color;
-			fillIn(startx, starty, half, half-1, half-1);
-			
-			matrix[half][half-1] = color;
-			fillIn(startx, half, half, half-1, half);
-			
-			matrix[half][half] = color;
-			fillIn(half, half, half, half, half);
-			
+
+			matrix[starty + (half-1)][startx + (half-1)] = color; // q1
+			matrix[starty + (half)][startx + (half-1)] = color;  // q3
+			matrix[starty + (half)][startx + (half)] = color;	// q4
 			color++;
+
+			fillIn(startx, starty, half, startx + (half-1), starty + (half-1)); // q1
+			fillIn(startx + half, starty, half, emptyx, emptyy); // q
+			fillIn(startx, starty + half, half, startx + (half-1), starty + (half)); // q3
+			fillIn(startx + half, starty + half, half, startx + (half), starty + (half)); // q4
+
 			break;
 			
 		case 3:
-			fillIn(startx, half, half, emptyx, emptyy);
 			
-			matrix[half-1][half-1] = color;
-			fillIn(startx, starty, half, half-1, half-1);
-			
-			matrix[half-1][half] = color;
-			fillIn(half, starty, half, half, half-1);
-			
-			matrix[half][half] = color;
-			fillIn(half, half, half, half, half);
-			
+			matrix[starty + (half-1)][startx + (half-1)] = color; // q1
+			matrix[starty + (half-1)][startx + (half)] = color; // q2
+			matrix[starty + (half)][startx + (half)] = color;	// q4
 			color++;
+			
+			fillIn(startx, starty, half, startx + (half-1), starty + (half-1)); // q1
+			fillIn(startx + half, starty, half, startx + (half), starty + (half-1)); // q2
+			fillIn(startx, starty + half, half, emptyx, emptyy); // q
+			fillIn(startx + half, starty + half, half, startx + (half), starty + (half)); // q4
+
 			break;
 			
 		case 4:
-			fillIn(half, half, half, emptyx, emptyy);
-			
-			matrix[half-1][half-1] = color;
-			fillIn(startx, starty, half, half-1, half-1);
-			
-			matrix[half-1][half] = color;
-			fillIn(half, starty, half, half, half-1);
-			
-			matrix[half][half-1] = color;
-			fillIn(startx, half, half, half-1, half);
-			
+			matrix[starty + (half-1)][startx + (half-1)] = color; // q1
+			matrix[starty + (half-1)][startx + (half)] = color; // q2
+			matrix[starty + (half)][startx + (half-1)] = color;  // q3
 			color++;
+			
+			fillIn(startx, starty, half, startx + (half-1), starty + (half-1)); // q1
+			fillIn(startx + half, starty, half, startx + (half), starty + (half-1)); // q2
+			fillIn(startx, starty + half, half, startx + (half-1), starty + (half)); // q3
+			fillIn(startx + half, starty + half, half, emptyx, emptyy); // q
+
 			break;
 		}
 		}
