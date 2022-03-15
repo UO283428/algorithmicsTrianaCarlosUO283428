@@ -2,7 +2,7 @@ package algstudent.s3;
 
 import java.util.Random;
 
-public class TrominoTimes {
+public class TrominoTime {
 
 	public static void main(String[] args) {
 		int reps = Integer.parseInt(args[0]);
