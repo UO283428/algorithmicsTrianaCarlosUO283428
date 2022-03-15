@@ -22,6 +22,7 @@ public class Tromino {
 
 	}
 
+	@SuppressWarnings("unused")
 	private static void printMatrix() {
 		int n = matrix.length;
 		for (int i=0; i<n; i++) {
