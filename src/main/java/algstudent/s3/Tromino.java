@@ -6,16 +6,19 @@ public class Tromino {
 	static int[][] matrix;
 
 	public static void main(String[] args) {
-		int size = 16;
+		int size = Integer.parseInt(args[0]);
+		//int size = 16;
 		matrix = new int[size][size];
 
-		int emptyx = 13;
-		int emptyy = 9;
+		int emptyx = Integer.parseInt(args[1]);
+		int emptyy = Integer.parseInt(args[2]);
+		//int emptyx = 13;
+		//int emptyy = 9;
 
 		matrix[emptyy][emptyx] = -1;
-		printMatrix();
+		//printMatrix();
 		fillIn(0, 0, size, emptyx, emptyy);
-		printMatrix();
+		//printMatrix();
 
 	}
 
@@ -31,7 +34,7 @@ public class Tromino {
 	}
 
 	public static void fillIn(int startx, int starty, int n, int emptyx, int emptyy) {
-		printMatrix();
+		//printMatrix();
 		int quadrant = 1;
 		int half = n/2;
 		
