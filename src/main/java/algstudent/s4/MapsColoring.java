@@ -5,9 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Dictionary;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MapsColoring {
 
@@ -15,36 +16,65 @@ public class MapsColoring {
 	public static String ColorsFile = "colors.txt";
 	public static String src = "src/main/java/algstudent/s4/";
 	
-	public static List<Country> world;
-	public static List<Color> colors;
-	public static Dictionary<Country, Color> map;
+	public static Map<String, List<String>> world;	//list of countries and its list of frontiers
+	public static List<String> colors;					//List of available Colors
+	public static Map<String, String> map;		//List of countries with its color
 	
 	public static void main(String[] args) {
 		world = loadCountries(src + CountriesFile);
 		colors = loadColors(src + ColorsFile);
+		map = new HashMap<String, String>();
 		
 		color();
 	}
-
+	
+	
+	
 	private static void color() {
-		for (Country country : world) {
-			for (Color color : colors) {
-				boolean isValid = true;
-				for (String usedIn : country.borders) {
-					if (color.countries.contains(usedIn)) {
-						isValid = false;
-						break;
-					}
-					if (isValid) {
-						
+		for (Map.Entry<String, List<String>> set : world.entrySet()) {
+			for(String color : colors) {
+				boolean valid = true;
+				for (String frontier : set.getValue()) {
+					String usedColor = get(frontier.trim(), map);
+					if (usedColor != null && usedColor.equals(color)) {
+						valid = false;
 					}
 				}
+				if (valid) {
+					map.put(set.getKey(), color);
+					break;
+				}
 			}
-		}
+		 }
+		
+		System.out.print(map.toString());
+		boolean valid = true;
+		for (Map.Entry<String, List<String>> set : world.entrySet()) {
+			for (String frontier : set.getValue()) {
+				String usedColor = get(frontier.trim(), map);
+				String colored = get(set.getKey(), map);
+				if (usedColor != null && usedColor.equals(colored)) {
+						valid = false;
+					}
+				}
+		 }
+		System.out.println(valid);
 	}
 
-	private static List<Color> loadColors(String fileName) {
-		HashMap<Color, ArrayList<String>> colors = new HashMap<Color, String[]>();
+	private static String get(String frontier, Map<String, String> map) {
+		String ret = null;
+		for (Map.Entry<String, String> set : map.entrySet()) {
+			if (set.getKey().equals(frontier)) {
+				return set.getValue();
+			}
+		}
+		return ret;
+	}
+
+
+
+	private static List<String> loadColors(String fileName) {
+		List<String> colors = new ArrayList<String>();
 		
 	    String line;
 	    
@@ -53,10 +83,8 @@ public class MapsColoring {
 	    	   
 	    	   while (file.ready()) {
 	    		   line = file.readLine();
-	    		   
-	    		   Color newColor = new Color(line);
-	    		   newColor.printColor();
-	    		   colors.add(newColor, );
+
+	    		   colors.add(line);
 	    	   }
 	    	   file.close();
 	    	return colors;
@@ -69,8 +97,8 @@ public class MapsColoring {
 	    return null;
 	}
 
-	private static List<Country> loadCountries(String fileName) {
-		List<Country> countries = new ArrayList<Country>();
+	private static HashMap<String, List<String>> loadCountries(String fileName) {
+		HashMap<String, List<String>> countries = new HashMap<String, List<String>>();
 		
 	    String line;
 	    
@@ -85,9 +113,7 @@ public class MapsColoring {
 	    		   
 	    		   String[] borders = country[1].split(",");
 	    		   
-	    		   Country newCountry = new Country(countryName, borders);
-	    		   newCountry.PrintCountry();
-	    		   countries.add(newCountry);
+	    		   countries.put(countryName, Arrays.asList(borders));
 	    	   }
 	    	   file.close();
 	    		return countries;
