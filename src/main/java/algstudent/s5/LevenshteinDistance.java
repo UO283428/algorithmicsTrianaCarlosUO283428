@@ -18,9 +18,9 @@ public class LevenshteinDistance {
 	}
 
 	public static int[][] calculateLevenshteinTable(String str12, String str22) {
-		lT = new int[str2.length()+1][str1.length()+1];
-		char[] s1 = str1.toCharArray();
-		char[] s2 = str2.toCharArray();
+		lT = new int[str12.length()+1][str12.length()+1];
+		char[] s1 = str12.toCharArray();
+		char[] s2 = str22.toCharArray();
 		
 		for(int i = 0; i < lT[0].length; i++) {
 			for (int j = 0; j < lT.length; j++) {
@@ -44,7 +44,7 @@ public class LevenshteinDistance {
 				}				
 			}
 		}
-		printMatrix(lT);
+		//printMatrix(lT);
 		return (lT);
 	}
 
