@@ -25,13 +25,13 @@ public class ImageAveragerBench {
 		img_avger = new ImageAverager(REAL_IMG, BAD_IMG, n_real, n_bad, S_NOISE);
 				
 		System.out.print("TESTING GREEDY:\n");
-		img_avger.splitSubsetsGreedy(10000);
-		System.out.printf("  -ZNCC: %f\n",  img_avger.zncc());
-		System.out.printf("  -Counter: %d\n",  img_avger.getCounter());
-		img_avger.saveResults(OUT_DIR_G);
+		//img_avger.splitSubsetsGreedy(10000);
+		//System.out.printf("  -ZNCC: %f\n",  img_avger.zncc());
+		//System.out.printf("  -Counter: %d\n",  img_avger.getCounter());
+		//img_avger.saveResults(OUT_DIR_G);
 			
-		System.out.print("TESTING BACKTRACKING BALANCING:\n");
-		img_avger.splitSubsetsBacktracking(1);
+		System.out.print("TESTING BACKTRACKING:\n");
+		img_avger.Backtracking();
 		System.out.printf("  -ZNCC: %f\n",  img_avger.zncc());
 		System.out.printf("  -Counter: %d\n",  img_avger.getCounter());
 		img_avger.saveResults(OUT_DIR_B);

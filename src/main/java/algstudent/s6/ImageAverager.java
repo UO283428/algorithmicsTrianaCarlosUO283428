@@ -190,9 +190,57 @@ public class ImageAverager {
 		
 	}
 	
+	public void Backtracking() {
+		half1_img = new Image(this.width, this.height);
+		half2_img = new Image(this.width, this.height);
+		avg_img = new Image(this.width, this.height);
+		
+		max_zncc = -1;
+		Backtracking(0);
+	}
+	
 	public void Backtracking(int level) {
-		
-		
+		if (level == dataset.length) { //Sol stop
+			if (zncc() > max_zncc) {
+				max_zncc = zncc();
+				System.out.println(max_zncc);
+				bestSol = copyOf(sol);
+				avg_img = new Image(avg_img.getWidth(), avg_img.getHeight());
+				avg_img.addSignal(half1_img);
+				avg_img.addSignal(half2_img);
+			}
+			
+		}else {
+			Image auxG1 = half1_img.copy();
+			Image auxG2 = half2_img.copy();
+			//Add image to group 1
+			half1_img.addSignal(dataset[level]);
+			sol[level] = 1;
+			
+			Backtracking(level+1);
+			half1_img = auxG1.copy();
+			
+			
+			//Add image to group 2
+			half2_img.addSignal(dataset[level]);
+			sol[level] = 2;
+			
+			Backtracking(level+1);
+			half2_img = auxG2.copy();
+			
+			
+			//Add image to group 3
+			sol[level] = 0;
+			Backtracking(level+1);
+		}
+	}
+
+	private int[] copyOf(int[] sol2) {
+		int[] ret = new int[sol2.length];
+		for (int i = 0; i < sol2.length; i++) {
+			ret[i] = sol2[i];
+		}
+		return ret;
 	}
 
 }
