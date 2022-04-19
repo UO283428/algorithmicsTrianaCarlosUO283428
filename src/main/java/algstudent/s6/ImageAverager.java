@@ -106,6 +106,10 @@ public class ImageAverager {
 		return this.half1_img.zncc(this.half2_img);
 	}
 	
+	public double getMaxZncc() {
+		return max_zncc;
+	}
+	
 	/**
 	 * Greedy algorithm: random instances for each half, the best one is the final solution    
 	 * @n_tries number of random tries     
@@ -173,24 +177,84 @@ public class ImageAverager {
 		avg_img.addSignal(half2_img);
 		
 	}
-	
+
 	/**
 	 * Backtracking algorithm 
 	 * @max_unbalancing: (pruning condition) determines the maximum difference between 
 	 * the number of images on each half set               
 	 */
 	public void splitSubsetsBacktracking(int max_unbalancing) {
+			half1_img = new Image(this.width, this.height);
+			half2_img = new Image(this.width, this.height);
+			avg_img = new Image(this.width, this.height);
+			
+			max_zncc = -1;
+			splitSubsetsBacktracking(0, max_unbalancing);
+		}
 		
+	public void splitSubsetsBacktracking(int level, int max_unbalancing) {
+		if (level == dataset.length) { //Sol stop
+			if (zncc() > max_zncc) {
+				max_zncc = zncc();
+				//System.out.println(max_zncc);
+				bestSol = copyOf(sol);
+				avg_img = new Image(this.width, this.height);
+				avg_img.addSignal(half1_img);
+				avg_img.addSignal(half2_img);
+			}
+			
+		}else {
+			Image auxG1 = half1_img.copy();
+			Image auxG2 = half2_img.copy();
+				
+			int leftBalance = getLeftBalance();
+			int rightBalance = getRightBalance();
+			//Add image to group 1
+			if (!((leftBalance +1 ) - rightBalance > max_unbalancing)) {
+				half1_img.addSignal(dataset[level]);
+				sol[level] = 1;
+				
+				splitSubsetsBacktracking(level+1, max_unbalancing);
+				half1_img = auxG1.copy();
+			}
+	
+			if (!((rightBalance +1 ) - leftBalance > max_unbalancing)) {
+				//Add image to group 2
+				half2_img.addSignal(dataset[level]);
+				sol[level] = 2;
+				
+				splitSubsetsBacktracking(level+1, max_unbalancing);
+				half2_img = auxG2.copy();
+			}
+				
+			//Add image to group 3
+			sol[level] = 0;
+			splitSubsetsBacktracking(level+1, max_unbalancing);
+		}
+	}
+
+	private int getLeftBalance() {
+		int balance = 0;
+		for (int i = 0; i < sol.length; i++) {
+				if (sol[i] == 1)
+					balance++;
+			}
+		return balance;
+	}
+
+	private int getRightBalance() {
+		int balance = 0;
+		for (int i = 0; i < sol.length; i++) {
+				if (sol[i] == 2)
+					balance++;
+			}
+		return balance;
 	}
 
 	/**
 	 * Backtracking algorithm without balancing. Using a larger than the number of images in the dataset ensures no prunning          
 	 */
 	public void splitSubsetsBacktracking() {
-		
-	}
-	
-	public void Backtracking() {
 		half1_img = new Image(this.width, this.height);
 		half2_img = new Image(this.width, this.height);
 		avg_img = new Image(this.width, this.height);
@@ -203,9 +267,9 @@ public class ImageAverager {
 		if (level == dataset.length) { //Sol stop
 			if (zncc() > max_zncc) {
 				max_zncc = zncc();
-				System.out.println(max_zncc);
+				//System.out.println(max_zncc);
 				bestSol = copyOf(sol);
-				avg_img = new Image(avg_img.getWidth(), avg_img.getHeight());
+				avg_img = new Image(this.width, this.height);
 				avg_img.addSignal(half1_img);
 				avg_img.addSignal(half2_img);
 			}
