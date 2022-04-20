@@ -3,8 +3,9 @@ package algstudent.s7.pyramid;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import labs.examples.branchandbound.pyramid.utils.BranchAndBound;
-import labs.examples.branchandbound.pyramid.utils.Node;
+import algstudent.s7.pyramid.utils.BranchAndBound;
+import algstudent.s7.pyramid.utils.Node;
+
 
 /**
  * To solve a reduced version of the Pyramid Puzzle
@@ -23,7 +24,6 @@ public class PyramidPuzzle extends BranchAndBound {
 
 
 /***************************************************/
-@SuppressWarnings("unused")
 class PyramidBoard extends Node {
 	private int[][] board; //board for playing
 	private int row; //current row of this board
@@ -35,6 +35,7 @@ class PyramidBoard extends Node {
 	 * @param n Size of the board
 	 */
 	public PyramidBoard(int n) { //Generates an empty board
+		super();
 		PyramidBoard.n = n;	 	
 		board = new int[n][n];
 		row = n-1;
@@ -77,7 +78,20 @@ class PyramidBoard extends Node {
      */
     @Override
     public void calculateHeuristicValue() {
-    	throw new UnsupportedOperationException("Not implemented yet.");
+    	int counter = 0;
+    	if (prune())
+    		heuristicValue = Integer.MAX_VALUE;
+    	else {
+    		for(int i = 0; i < n; i++) {
+    			for (int j = 0; j <= i; j++) {
+    				if (board[i][j] < 1) {
+    					counter++;
+    				}
+    			}
+    		heuristicValue = counter;
+    		}
+    	}
+    	
     }
     
 	/**
@@ -85,13 +99,23 @@ class PyramidBoard extends Node {
 	 * @return True if we should prune. False otherwise
 	 */
 	private boolean prune() {
-		throw new UnsupportedOperationException("Not implemented yet.");
-
+		for (int i = 0; i < n-1; i++) {
+			for (int j = 0; j <= i; j++) {
+				if (board[i][j] > 0 && board[i+1][j]>0 && board[i+1][j+1]>0) {
+					boolean valid = false;
+					if (board[i][j] == board[i+1][j] + board[i+1][j+1]) valid = true;
+					else if (board[i][j] == board[i+1][j] - board[i+1][j+1]) valid = true;
+					else if (board[i][j] == board[i+1][j+1] - board[i+1][j]) valid = true;
+					if (!valid) return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	@Override
 	public boolean isSolution() {
-		throw new UnsupportedOperationException("Not implemented yet.");
+		return heuristicValue == 0;
 	}
     
 	/**
@@ -100,7 +124,27 @@ class PyramidBoard extends Node {
 	 */
 	@Override
 	public ArrayList<Node> expand() {
-		throw new UnsupportedOperationException("Not implemented yet.");
+		ArrayList<Node> result = new ArrayList<Node>();
+		int[][] newBoard;
+		PyramidBoard temp;
+		
+		while(board[row][column] != 0) {
+			if (column > 0) {
+				column--;
+			}else {
+				row--;
+				column = row;
+			}
+		}
+		
+		for (int k = 1; k < 10; k++) {
+			newBoard = copyBoard(row, column, k);
+			temp = new PyramidBoard(newBoard, depth+1, this.getID(), row, column);
+			result.add(temp);
+		
+		}
+		
+		return result;
 	}
 	
 	private int[][] copyBoard(int row, int column, int k) {
@@ -121,7 +165,13 @@ class PyramidBoard extends Node {
 	 * @param parentID
 	 */
     public PyramidBoard(int[][] board, int depth, UUID parentID, int row, int column) {
-    	throw new UnsupportedOperationException("Not implemented yet.");
+    	super();
+    	this.board = board;
+    	this.depth = depth;
+    	this.parentID = parentID;
+    	this.row = row;
+    	this.column = column;
+    	calculateHeuristicValue();
     }
 
 } 

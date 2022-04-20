@@ -12,13 +12,13 @@ import org.junit.Test;
 public class PyramidPuzzleTest {
 	@Test
 	public void test5() {
-		boolean result = executeFromFile("src/main/java/labs/examples/branchandbound/pyramid/case5.txt");
+		boolean result = executeFromFile("src/main/java/algstudent/s7/pyramid/case5.txt");
 		assertEquals(true, result);
 	}
 	
 	@Test
 	public void test15() {
-		boolean result = executeFromFile("src/main/java/labs/examples/branchandbound/pyramid/case15.txt");
+		boolean result = executeFromFile("src/main/java/algstudent/s7/pyramid/case15.txt");
 		assertEquals(true, result);
 	}
 	
