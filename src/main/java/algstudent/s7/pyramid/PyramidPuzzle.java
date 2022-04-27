@@ -36,7 +36,7 @@ class PyramidBoard extends Node {
 	 */
 	public PyramidBoard(int n) { //Generates an empty board
 		super();
-		PyramidBoard.n = n;	 	
+		PyramidBoard.n = n;
 		board = new int[n][n];
 		row = n-1;
 		column = n-1;
@@ -56,16 +56,16 @@ class PyramidBoard extends Node {
 				board[row][i] = Integer.parseInt(values[i]);
 		}
 	}
-		
+
     @Override
     public String toString() {
 		StringBuilder sb = new StringBuilder();
 		for (int i=0; i<n; i++) { 
 			//To complete
-			for (int j=0; j<=i; j++){			
+			for (int j=0; j<=i; j++){
 				if (board[i][j] == 0) //empty
 					sb.append("* ");
-				else 
+				else
 					sb.append(board[i][j] + " ");
 			}
 			sb.append("\n");
@@ -112,7 +112,7 @@ class PyramidBoard extends Node {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean isSolution() {
 		return heuristicValue == 0;

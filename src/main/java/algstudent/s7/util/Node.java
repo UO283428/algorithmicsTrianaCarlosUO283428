@@ -1,7 +1,9 @@
-package algstudent.s7;
+package algstudent.s7.util;
 
 import java.util.ArrayList;
 import java.util.UUID;
+
+import algstudent.s7.NodeAvg;
 
 /**
  * To represent the different states of a problem in the graph
@@ -13,7 +15,7 @@ public abstract class Node implements Comparable<Node> {
     protected int depth; //Number of moves made so far (is equal to the number of nodes developed) on this branch
     protected UUID parentID; //Parent ID for node tracking
     protected UUID ID; //ID for the node
-    protected int heuristicValue; //Value of the calculated heuristic
+    protected double heuristicValue; //Value of the calculated heuristic
 
     /**
      * Constructor for Node objects
@@ -82,6 +84,6 @@ public abstract class Node implements Comparable<Node> {
 	}
     
 	public abstract void calculateHeuristicValue();
-	public abstract ArrayList<Node> expand();
+	public abstract ArrayList<NodeAvg> expand();
 	public abstract boolean isSolution();
 }

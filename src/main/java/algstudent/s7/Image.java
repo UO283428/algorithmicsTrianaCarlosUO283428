@@ -1,4 +1,4 @@
-package algstudent.s7.ImageAverager;
+package algstudent.s7;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;

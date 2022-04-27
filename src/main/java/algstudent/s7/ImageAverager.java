@@ -1,4 +1,4 @@
-package algstudent.s7.ImageAverager;
+package algstudent.s7;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,9 +8,11 @@ import java.util.Random;
 public class ImageAverager {
 	
 	private Image real_img, bad_img; //to store the main good and main bad image
-	private Image avg_img, half1_img, half2_img; //to store the final tests to see if we improve the previous results
-	private Image[] dataset; //dataset to store all the images (good and bad ones)
-	private int[] sol; //to store the partial results (where I am putting the pictures? 0->not assigned, 1->first half, 2->second half
+	private Image avg_img; //to store the final tests to see if we improve the previous results
+	public Image half1_img;
+	public Image half2_img;
+	public Image[] dataset; //dataset to store all the images (good and bad ones)
+	public int[] sol; //to store the partial results (where I am putting the pictures? 0->not assigned, 1->first half, 2->second half
 	private int[] bestSol; //to store the best solution
 	private int width, height; //to store the width and height of the image
 	//backtracking variables
@@ -63,6 +65,21 @@ public class ImageAverager {
 		}
 	}
 	
+	public ImageAverager(ImageAverager manager) {
+		this.real_img = manager.real_img.copy();
+		this.bad_img = manager.bad_img.copy();
+		this.avg_img = manager.avg_img.copy();
+		this.width = this.real_img.getWidth();
+		this.height = this.real_img.getHeight();
+		
+		this.avg_img = manager.avg_img.copy();
+		this.half1_img = manager.half1_img.copy();
+		this.half2_img = manager.half2_img.copy();
+		
+		this.dataset = manager.dataset.clone();
+		this.sol = manager.sol.clone();
+		this.bestSol = manager.bestSol.clone();
+	}
 	/**
 	 * To generate a random array of positions
 	 * @param n Length of the array
