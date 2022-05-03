@@ -44,7 +44,7 @@ public class ImageAveragerBench {
 		//img_avger.saveResults(OUT_DIR_B);
 
 		
-		for (int n = 2; n <= Integer.MAX_VALUE; n++) {
+		for (int n = 2; n <= 14; n++) {
 
 			// Generating and testing a single dataset instance
 			n_bad = (int) ((PERCENTAGE_BAD/100.)*n);
@@ -57,28 +57,28 @@ public class ImageAveragerBench {
 			t = 0;
 
 			
-			System.out.print("TESTING GREEDY:\n");
-			t1 = System.currentTimeMillis();
-			img_avger.splitSubsetsGreedy(n);
-			t2 = System.currentTimeMillis();
-			t += t2-t1;
-			
-			System.out.printf("  -ZNCC: %f\n",  img_avger.zncc());
-			System.out.printf("  -Counter: %d\n",  img_avger.getCounter());
-			System.out.println("  -n=" + n + "**TIME=" + t);
-			img_avger.saveResults(OUT_DIR_G);
-
-			t = 0;
-			System.out.print("TESTING BACKTRACKING:\n");
-			t1 = System.currentTimeMillis();
-			img_avger.splitSubsetsBacktracking();
-			t2 = System.currentTimeMillis();
-			t += t2-t1;
-			
-			System.out.printf("  -ZNCC: %f\n",  img_avger.getMaxZncc());
-			System.out.printf("  -Counter: %d\n",  img_avger.getCounter());
-			System.out.println("  -n=" + n + "**TIME=" + t);
-			img_avger.saveResults(OUT_DIR_B);
+//			System.out.print("TESTING GREEDY:\n");
+//			t1 = System.currentTimeMillis();
+//			img_avger.splitSubsetsGreedy(n);
+//			t2 = System.currentTimeMillis();
+//			t += t2-t1;
+//			
+//			System.out.printf("  -ZNCC: %f\n",  img_avger.zncc());
+//			System.out.printf("  -Counter: %d\n",  img_avger.getCounter());
+//			System.out.println("  -n=" + n + "**TIME=" + t);
+//			img_avger.saveResults(OUT_DIR_G);
+//
+//			t = 0;
+//			System.out.print("TESTING BACKTRACKING:\n");
+//			t1 = System.currentTimeMillis();
+//			img_avger.splitSubsetsBacktracking();
+//			t2 = System.currentTimeMillis();
+//			t += t2-t1;
+//			
+//			System.out.printf("  -ZNCC: %f\n",  img_avger.getMaxZncc());
+//			System.out.printf("  -Counter: %d\n",  img_avger.getCounter());
+//			System.out.println("  -n=" + n + "**TIME=" + t);
+//			img_avger.saveResults(OUT_DIR_B);
 
 			t = 0;
 			System.out.print("TESTING SUBSET BACKTRACKING:\n");
@@ -89,6 +89,7 @@ public class ImageAveragerBench {
 			
 			System.out.printf("  -ZNCC: %f\n",  img_avger.getMaxZncc());
 			System.out.printf("  -Counter: %d\n",  img_avger.getCounter());
+			System.out.print("	-Number of total Nodes: " + img_avger.GNodes + "\n");
 			System.out.println("  -n=" + n + "**TIME=" + t);
 			img_avger.saveResults(OUT_DIR_BSC);
 		}

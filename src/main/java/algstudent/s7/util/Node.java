@@ -36,7 +36,7 @@ public abstract class Node implements Comparable<Node> {
      * Getter for heuristicValue
      * @return The heuristicValue variable
      */
-	public int getHeuristicValue() { return heuristicValue; }
+	public double getHeuristicValue() { return heuristicValue; }
 	
 	/**
 	 * Compares whether two nodes are equal using the ToString method
@@ -75,8 +75,8 @@ public abstract class Node implements Comparable<Node> {
     
 	@Override
 	public int compareTo(Node node) { //BRANCHING METHOD
-		int totalValue = heuristicValue;
-		int totalValueToBeCompared = node.getHeuristicValue();
+		double totalValue = heuristicValue;
+		double totalValueToBeCompared = node.getHeuristicValue();
 		
 		if (totalValue > totalValueToBeCompared) return 1; //this has less priority (is bigger)
 		else if (totalValue == totalValueToBeCompared) return 0; //The same priority

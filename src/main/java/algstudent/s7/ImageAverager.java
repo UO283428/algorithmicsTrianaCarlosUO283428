@@ -68,13 +68,28 @@ public class ImageAverager {
 	public ImageAverager(ImageAverager manager) {
 		this.real_img = manager.real_img.copy();
 		this.bad_img = manager.bad_img.copy();
-		this.avg_img = manager.avg_img.copy();
+		
 		this.width = this.real_img.getWidth();
 		this.height = this.real_img.getHeight();
 		
-		this.avg_img = manager.avg_img.copy();
-		this.half1_img = manager.half1_img.copy();
-		this.half2_img = manager.half2_img.copy();
+		if (manager.avg_img != null)
+			this.avg_img = manager.avg_img.copy();
+		else
+			avg_img = new Image(width, height);
+		if (manager.half1_img != null)
+			this.half1_img = manager.half1_img.copy();
+		else
+			half1_img = new Image(width, height);
+		if (manager.half2_img != null)
+			this.half2_img = manager.half2_img.copy();
+		else
+			this.half2_img = new Image(width, height);
+		
+		if (manager.half1_img != null && manager.half2_img != null) {
+			avg_img.addSignal(half1_img);
+			avg_img.addSignal(half2_img);
+			
+		}
 		
 		this.dataset = manager.dataset.clone();
 		this.sol = manager.sol.clone();

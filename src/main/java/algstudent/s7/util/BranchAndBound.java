@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import algstudent.s7.NodeAvg;
+
 /**
  * Main class to solve problems using the Branch and Bound technique
  * We need to extend it for any specific problem
@@ -14,7 +16,7 @@ public abstract class BranchAndBound {
 	protected Heap ds; //Nodes to be explored (not used nodes)
 	protected Node bestNode; //To save the final node of the best solution
 	protected Node rootNode; //Initial node
-	protected int pruneLimit; //To prune nodes above this value
+	protected double pruneLimit; //To prune nodes above this value
 	       
 	/**
 	 * Constructor for BrancAndBount objects
@@ -35,11 +37,11 @@ public abstract class BranchAndBound {
 		while (!ds.empty() && ds.estimateBest() < pruneLimit) {
 			Node node = ds.extractBestNode();	
 			
-			ArrayList<Node> children = node.expand(); 
+			ArrayList<NodeAvg> children = node.expand(); 
 			
 			for (Node child : children)
 				if (child.isSolution()) {
-					int cost = child.getHeuristicValue();
+					double cost = child.getHeuristicValue();
 					if (cost < pruneLimit) {
 						pruneLimit = cost;
 						bestNode = child;

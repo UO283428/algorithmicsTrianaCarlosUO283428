@@ -16,6 +16,8 @@ public class ImageAverager {
 	//backtracking variables
 	private int counter; //to store the number of times we assign an image to half1, half2 or no group
 	private double max_zncc; //to store the best ZNCC
+	public int TNodes, GNodes;
+	
 	
 	/** Constructor
 	* @real_path  path to the real image (pattern to find) on disk
@@ -26,6 +28,8 @@ public class ImageAverager {
 	*/
 	public ImageAverager(String real_path, String bad_path, int n_real, int n_bad, double s_noise) {
 		assert (n_real >= 1) && (n_bad < n_real);//assert at least one reference image
+		TNodes = 0;
+		GNodes = 0;
 		
 		//load reference and bad images
 		this.real_img = new Image(real_path);
@@ -211,20 +215,26 @@ public class ImageAverager {
 			int rightBalance = getRightBalance();
 			//Add image to group 1
 			if (!((leftBalance +1 ) - rightBalance > max_unbalancing)) {
+				GNodes++;
 				half1_img.addSignal(dataset[level]);
 				sol[level] = 1;
 				
 				splitSubsetsBacktracking(level+1, max_unbalancing);
 				half1_img = auxG1.copy();
+			}else {
+				TNodes++;
 			}
 	
+			//Add image to group 2
 			if (!((rightBalance +1 ) - leftBalance > max_unbalancing)) {
-				//Add image to group 2
+				GNodes++;
 				half2_img.addSignal(dataset[level]);
 				sol[level] = 2;
 				
 				splitSubsetsBacktracking(level+1, max_unbalancing);
 				half2_img = auxG2.copy();
+			}else {
+				TNodes++;
 			}
 				
 			//Add image to group 3
